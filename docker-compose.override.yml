@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    command: /bin/bash -c "/opt/mssql/bin/sqlservr --accept-eula"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=AdminMicrosoft123
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./include:/app/include
+    extra_hosts:
+      - "host.docker.internal:host-gateway" 
+  scheduler:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  webserver:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  triggerer:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  postgres:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
